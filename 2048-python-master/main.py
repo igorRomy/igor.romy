@@ -24,7 +24,7 @@ This is where we run an instance of the gameSimulator:GameGrid (parent class) ->
 """
 
 # which function will you use
-search_functions = ['pure_monte_carlo_tree_search', 'minimax', 'monte_carlo_tree_search']
+search_functions = ['pure_monte_carlo_tree_search', 'expectimax', 'variation_monte_carlo_tree_search']
 
 # which score algorithm will you use
 game_score_algs = ['game_score_count_tile_values', 'game_score',
@@ -37,14 +37,19 @@ score_types = ['set_score', 'set_score_lowest', 'set_score_highest']
 # BEST SEARCHES
 
 # PURE MONTE CARLO TREE SEARCH
+# Without UI
 # _ = gameWithoutUI.GameGrid(search_functions[0], game_score_algs[1], score_types[0], depth=0, iterations=10)
-_ = gameSimulator.GameGrid(search_functions[0], game_score_algs[1], score_types[2], depth=0, iterations=20)
+# With UI
+# _ = gameSimulator.GameGrid(search_functions[0], game_score_algs[1], score_types[2], depth=0, iterations=20)
 
-# Expectimax
-#_ = gameWithoutUI.GameGrid(search_functions[1], game_score_algs[2], score_types[0], depth=15, iterations=40)
-#_ = gameSimulator.GameGrid(search_functions[1], game_score_algs[2], score_types[0], depth=5, iterations=50)
-#_ = gameSimulator.GameGrid(search_functions[1], game_score_algs[2], score_types[0], depth=10, iterations=80)
+# EXPECTIMAX
+# Without UI
+# _ = gameWithoutUI.GameGrid(search_functions[1], game_score_algs[2], score_types[0], depth=15, iterations=40)
+# With UI
+# _ = gameSimulator.GameGrid(search_functions[1], game_score_algs[2], score_types[1], depth=3, iterations=20)
 
-# MONTE CARLO TREE SEARCH
-#_ = gameSimulator.GameGrid(search_functions[2], game_score_algs[1], score_types[0], depth=10, iterations=30)
-# _ = GameGrid(search_functions[2], game_score_algs[0], score_types[2], depth=10, iterations=10)
+# VARIATION MONTE CARLO TREE SEARCH
+# Without UI
+# _ = gameWithoutUI.GameGrid(search_functions[2], game_score_algs[0], score_types[2], depth=10, iterations=10)
+# With UI
+# _ = gameSimulator.GameGrid(search_functions[2], game_score_algs[1], score_types[0], depth=10, iterations=30)

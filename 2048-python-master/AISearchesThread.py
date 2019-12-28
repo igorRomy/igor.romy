@@ -110,7 +110,7 @@ class AISearchGridThread(Thread):
         # Returning gotten score
         return getattr(Logic, game_score_alg)(self.matrix)
 
-    def minimax(self, key, game_score_alg, depth):
+    def expectimax(self, key, game_score_alg, depth):
         """
          After making a move in given direction(key), the method will copy
          the current game state (depth 0/ node 1) -> create 4 new nodes in depth 1
@@ -140,7 +140,7 @@ class AISearchGridThread(Thread):
         # See count as amount of nodes...
         # The more the depth is expanded the more nodes each depth will have
         # EXTRA: each deeper depth has 4 times more nodes than the previous depth
-        count = 1
+        count = 4
         # When we first iterate we start with a single node (first node)
         # To achieve depth scalability 'first_enter' notifies us that we only have one node
         first_enter = True
@@ -154,37 +154,44 @@ class AISearchGridThread(Thread):
         # This is the actual "formula" we use
         # We iterate until wanted depth is achieved
         # With every iteration the tree is expanded -> how higher depth how more nodes (game states)
-        # When iteration is finished we return the best score (gotten from node).
+        # When iteration is finished we return the best score (gotten from a node).
+        t = True
         for depth_iteration in range(depth):
+            key_rotation = 0
+            past_node = 0
+            counter = 0
             for node in range(count):
-                counter = 0
-                past_node = 0
-                for key in range(4):
-                    if first_enter:
-                        first_enter_counter += 1
-                        matrix_copy = copy.deepcopy(self.matrix)
-                        test_matrix[depth_iteration][node][key] = self.key_down_char_with_matrix(self.array_keys[key], matrix_copy)
+                counter += 1
+                if first_enter:
+                    first_enter_counter += 1
+                    matrix_copy = copy.deepcopy(self.matrix)
+                    test_matrix[depth_iteration][node] = self.key_down_char_with_matrix(self.array_keys[node],
+                                                                                        matrix_copy)
 
-                        if first_enter_counter == 4:
-                            count = 4
-                            first_enter = False
+                    if first_enter_counter == 4:
+                        count *= 4
+                        first_enter = False
+                else:
+                    test_matrix[depth_iteration][node] = self.key_down_char_with_matrix(
+                        self.array_keys[key_rotation], test_matrix[depth_iteration - 1][past_node])
+                    if key_rotation == 3:
+                        key_rotation = 0
                     else:
-                        counter += 1
-                        test_matrix[depth_iteration][node][key] = self.key_down_char_with_matrix(
-                            self.array_keys[key], test_matrix[depth_iteration-1][past_node][key])
-                        if counter % 4 == 0:
-                            past_node += 1
-        # Next iteration will have 4 times more nodes... count = quantity of nodes
-        count *= 4
+                        key_rotation += 1
+                if counter % 4 == 0:
+                    past_node += 1
+            # Next iteration will have 4 times more nodes... count = quantity of nodes
+            if not t:
+                count *= 4
+            t = False
         # Iterating every node in max depth and adding there game score to all_scores
-        for node in range(int(count/4)):
-            for key in range(4):
-                all_scores.append(getattr(Logic, game_score_alg)(test_matrix[depth-1][node][key]))
+        for node in range(int(count / 4)):
+            all_scores.append(getattr(Logic, game_score_alg)(test_matrix[depth - 1][node]))
 
         # Return highest gotten score of all nodes
         return max(all_scores)
 
-    def monte_carlo_tree_search(self, key, game_score_alg, depth):
+    def variation_monte_carlo_tree_search(self, key, game_score_alg, depth):
         """
         After making a move in a given direction(key), the method will iterate over 4 copies of
         the current game state (self.matrix) performing random moves for each copy,
@@ -253,7 +260,7 @@ class AISearchGridThread(Thread):
             total += all_scores[i]
 
         # Monte Carlo Tree Search normally returns average gotten score
-        return total/len(all_scores)
+        return total / len(all_scores)
 
     def key_down_char(self, key):
         """

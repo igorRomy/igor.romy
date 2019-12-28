@@ -89,7 +89,7 @@ class Logic:
     def game_score(matrix):
         """
         Official way to score points -> higher tiles get more points than just their shown value
-        Counts the total score of a matrix/game: pleas see implementation, example: tile value 8 = (2+2) + (2+2) + (4+4),
+        Counts the total score of a matrix/game: please see implementation, example: tile value 8 = (2+2) + (2+2) + (4+4),
         Rule: tile of value 2 = score 0
         :param matrix:
         :return total_score:
