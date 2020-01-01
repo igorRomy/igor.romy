@@ -240,12 +240,12 @@ class Logic:
     @staticmethod
     def game_state(matrix):
         """
+        Made to play even beyond getting a 2048 tile
         Gives the current game state:
-            'win' = gotten a tile of 2048 (NOT USED)
             'lose' = no empty tiles + no merges possible (no moves)
             'not over" =  no 'lose' or 'win', keep on playing
         :param matrix:
-        :return game_state:  'win' | 'lose' | 'not over'
+        :return game_state:  'lose' | 'not over'
         """
 
         """
@@ -271,6 +271,42 @@ class Logic:
                 return 'not over'
         for j in range(len(matrix)-1):  # check up/down entries on last column
             if matrix[j][len(matrix)-1] == matrix[j+1][len(matrix)-1]:
+                return 'not over'
+        return 'lose'
+
+    @staticmethod
+    def game_state_win_text(matrix):
+        """
+        Gives the current game state:
+            'win' = gotten a tile of 2048 (NOT USED)
+            'lose' = no empty tiles + no merges possible (no moves)
+            'not over" =  no 'lose' or 'win', keep on playing
+        :param matrix:
+        :return game_state:  'win' | 'lose' | 'not over'
+        """
+
+        # To set winning tile
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == 2048:
+                    return 'win'
+                    # return 'not over'
+
+        for i in range(len(matrix) - 1):
+            # intentionally reduced to check the row on the right and below
+            # more elegant to use exceptions but most likely this will be their solution
+            for j in range(len(matrix[0]) - 1):
+                if matrix[i][j] == matrix[i + 1][j] or matrix[i][j + 1] == matrix[i][j]:
+                    return 'not over'
+        for i in range(len(matrix)):  # check for any zero entries
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == 0:
+                    return 'not over'
+        for k in range(len(matrix) - 1):  # to check the left/right entries on the last row
+            if matrix[len(matrix) - 1][k] == matrix[len(matrix) - 1][k + 1]:
+                return 'not over'
+        for j in range(len(matrix) - 1):  # check up/down entries on last column
+            if matrix[j][len(matrix) - 1] == matrix[j + 1][len(matrix) - 1]:
                 return 'not over'
         return 'lose'
 

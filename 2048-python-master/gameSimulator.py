@@ -84,7 +84,7 @@ class GameGrid(Frame):
         print("START")
 
         # Loop that iterates until game is over -> no more moves left
-        while Logic.game_state(self.matrix) == 'not over':
+        while Logic.game_state_win_text(self.matrix) == 'not over':
             start_time = time.time()
 
             # Get best move -> see class documentation for more info of usage/best practise
@@ -117,6 +117,13 @@ class GameGrid(Frame):
         print("Total time needed: {} seconds".format(self.total_time_needed))
         print("Time average per move: {} seconds".format(self.total_time_needed / self.average_time_per_move))
         print("Total moves made: {}".format(self.average_time_per_move))
+
+        # set tile text of win
+        if Logic.game_state_win_text(self.matrix) == 'win':
+            self.grid_cells[1][1].configure(
+                text="You", bg=c.BACKGROUND_COLOR_CELL_EMPTY)
+            self.grid_cells[1][2].configure(
+                text="Win!", bg=c.BACKGROUND_COLOR_CELL_EMPTY)
 
         # Prevents UI from closing
         self.mainloop()
@@ -432,7 +439,7 @@ class GameGrid(Frame):
         elif key in self.commands:
             self.matrix, done = self.commands[char](self.matrix)
             if done:
-                self.matrix = Logic.add_two(self.matrix)
+                self.matrix = Logic.add_tile(self.matrix)
                 # record last move
                 self.history_matrixs.append(self.matrix)
                 self.update_grid_cells()
@@ -477,7 +484,7 @@ class GameGrid(Frame):
         elif key in self.commands:
             self.matrix, done = self.commands[repr(event.char)](self.matrix)
             if done:
-                self.matrix = Logic.add_two(self.matrix)
+                self.matrix = Logic.add_tile(self.matrix)
                 # record last move
                 self.history_matrixs.append(self.matrix)
                 self.update_grid_cells()

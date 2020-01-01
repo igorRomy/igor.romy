@@ -436,7 +436,7 @@ class GameGrid:
 
         if done:
             # Logic.[direction] worked = add new tile (game rules)
-            self.matrix = Logic.add_two(self.matrix)
+            self.matrix = Logic.add_tile(self.matrix)
             # NOT USED, record last move for potential back track
             # self.history_matrix.append(self.matrix)
             # ONLY used in UI

@@ -38,27 +38,27 @@ score_types = ['set_score', 'set_score_lowest', 'set_score_highest']
 
 
 def pure_monte_carlo_tree_search_without_ui():
-    _ = gameSimulator.GameGrid(search_functions[0], game_score_algs[1], score_types[2], depth=0, iterations=20)
+    _ = gameWithoutUI.GameGrid(search_functions[0], game_score_algs[1], score_types[2], depth=0, iterations=50)
 
 
 def pure_monte_carlo_tree_search_with_ui():
-    _ = gameWithoutUI.GameGrid(search_functions[0], game_score_algs[1], score_types[0], depth=0, iterations=10)
+    _ = gameSimulator.GameGrid(search_functions[0], game_score_algs[1], score_types[0], depth=0, iterations=50)
 
 
 def epectimax_without_ui():
-    _ = gameWithoutUI.GameGrid(search_functions[1], game_score_algs[2], score_types[0], depth=15, iterations=40)
+    _ = gameWithoutUI.GameGrid(search_functions[1], game_score_algs[2], score_types[1], depth=3, iterations=30)
 
 
 def epectimax_with_ui():
-    _ = gameSimulator.GameGrid(search_functions[1], game_score_algs[2], score_types[0], depth=3, iterations=40)
+    _ = gameSimulator.GameGrid(search_functions[1], game_score_algs[2], score_types[1], depth=3, iterations=30)
 
 
 def variation_monte_carlo_tree_search_without_ui():
-    _ = gameWithoutUI.GameGrid(search_functions[2], game_score_algs[0], score_types[2], depth=10, iterations=10)
+    _ = gameWithoutUI.GameGrid(search_functions[2], game_score_algs[1], score_types[0], depth=8, iterations=40)
 
 
 def variation_monte_carlo_tree_search_with_ui():
-    _ = gameSimulator.GameGrid(search_functions[2], game_score_algs[1], score_types[0], depth=10, iterations=30)
+    _ = gameSimulator.GameGrid(search_functions[2], game_score_algs[1], score_types[0], depth=8, iterations=40)
 
 
 def create_tests_without_ui(search_function, game_score_alg, score_type, iteration, depth=None):
@@ -77,8 +77,8 @@ def create_tests_with_ui(search_function, game_score_alg, score_type, iteration,
 #epectimax_without_ui()
 #epectimax_with_ui()
 #variation_monte_carlo_tree_search_without_ui()
-#variation_monte_carlo_tree_search_with_ui()
+variation_monte_carlo_tree_search_with_ui()
 
 # create test... don't don't use depth when testing Pure Monte Carlo tree search!
 #create_tests_without_ui(1, 1, 1, 10, 3)
-create_tests_with_ui(1, 1, 1, 10, 3)
+#create_tests_with_ui(1, 1, 1, 10, 3)
